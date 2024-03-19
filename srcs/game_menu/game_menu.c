@@ -101,11 +101,15 @@ void	handle_menu(t_cub *cub)
 		cub->menu.on_screen = false;
 		cub_mouse_hide(cub);
 		cub->menu.x -= 1;
+		mlx_hook(cub->win, BUTTON_PRESS, BUTTON_PRESS_MASK, \
+		cub_handle_button_press, cub);
 	}
 	else
 	{
 		cub->menu.on_screen = true;
 		cub_mouse_show(cub);
 		ft_bzero(cub->keys_states, 65509 * sizeof(int));
+		mlx_hook(cub->win, BUTTON_PRESS, BUTTON_PRESS_MASK, \
+		cub_handle_mouse, cub);
 	}
 }
