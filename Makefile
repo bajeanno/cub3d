@@ -106,7 +106,7 @@ CC			:=	cc
 
 RM			:=	rm -rf
 
-CFLAGS		=	-Wall -Wextra -Werror -pthread #-Ofast -flto
+CFLAGS		=	-Wall -Wextra -Werror -pthread -Ofast -flto
 
 DFLAGS		:=	-MP -MMD
 
