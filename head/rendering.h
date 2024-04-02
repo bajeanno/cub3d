@@ -14,7 +14,7 @@
 # define RENDERING_H
 # include "cub3D.h"
 # define MINIMAP_SCALE			10
-# define MINIMAP_SIZE			50
+# define MINIMAP_SIZE			100
 # define MINIMAP_OFFSET			30
 # define OUT_COLOR	0x000000
 # define IN_COLOR	0Xffe3b8

@@ -118,5 +118,6 @@ void	display_portal_gun(t_cub *cub)
 	if (cub->last_portal_placed == 'R')
 		texture_id = 15;
 	update_gun_pos(cub);
+	texture = (t_iposition){0, 0};
 	display_gun(cub, gun_size, texture, texture_id);
 }

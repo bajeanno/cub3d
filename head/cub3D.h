@@ -260,7 +260,7 @@ enum e_key_codes
 # define HEIGHT 0
 # define WIDTH 1
 # ifndef NB_THREADS
-#  define NB_THREADS	16
+#  define NB_THREADS	20
 # endif
 
 //=================== STRUCTURES ====================//

@@ -21,12 +21,11 @@ void	destroy_threads(t_cub *cub)
 	cub->program_ends = true;
 	pthread_mutex_unlock(&cub->program_ends_mutex);
 	while (cub->threads && i < NB_THREADS)
+	{
 		if (cub->threads[i])
 			pthread_join(cub->threads[i++], NULL);
-	if (&cub->finished_mutex)
-		pthread_mutex_destroy(&cub->finished_mutex);
-	if (&cub->program_ends_mutex)
-		pthread_mutex_destroy(&cub->program_ends_mutex);
-	if (&cub->ray_mutex)
-		pthread_mutex_destroy(&cub->ray_mutex);
+	}
+	pthread_mutex_destroy(&cub->finished_mutex);
+	pthread_mutex_destroy(&cub->program_ends_mutex);
+	pthread_mutex_destroy(&cub->ray_mutex);
 }
