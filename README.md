@@ -1,28 +1,63 @@
-# Cub3D
-A portal game made **entirely in C**, using **MLX library (minilibX)**, rendering on **CPU only** with **multithreading enabled**.
+# 🎮 Cub3D
 
-## The basics
-This game is made with the same render technique as **wolfenstein3D** and the first doom, also known as "ray-casting", this technique is about knowing the distance between the player and every wall of the map in their field of view to represent on the screen a fake 3D projection.
-All is about the height of each wall, as more the wall is close, more it will seem high for the player and vice versa, so for each pixel in x coordinates, the game will shoot a ray from the player in the direction told by the x coordinate (little trigonometry notions are needed here) until it touches a wall, there the game gets the distance to this wall and computes the height of the wall on the projection.
-Now that the game knows the height it needs to display for each x coordinate, it's about to render the right pattern of the right texture for this coordinate at the right height for this pixel column.
+**Cub3D** is a **portal game** built **entirely in C**, using the **MLX (minilibX)** library. It renders everything on the **CPU only**, and supports **multithreading**.
 
-## The Portal part / ray shooting through portals
-The Portal part has been about teleporting rays from a wall marked as "portal" to the other wall marked as "portal" by the player during the game (right and left click as the real portal game).
-A difficulty we encountered was how to display multiple portals when two portals face each other. 
-Well, for each x coordinate, and subsequently each ray, we needed to record the distance between the ray and the player every time it crosses a portal. We managed to limit the number of portal crossed to 7 as the filter implemented on the portal texture make difficult to see beyond. However, each time a ray crosses a portal we add the distance it traveled to the global distance, then reset it, and teleport the ray.
-Now that the game recorded all portals crossed we can process to render each portal as if they were walls starting from the last crossed, so the closest portal appears in front of the farthest.
-For the player, the game will use the same method as a ray, except some verifications of moving versus viewing angles, as a ray has an angle property that is its moving angle, the player instead has a viewing angle, so from the viewing angle and the keys that are pressed, we're able to determine the real moving angle to know if it'should cross the portal or not.
-For example, if you're facing back the portal and moving backward, and the game only uses the player's viewing angle, then you will not be able to cross the portal, even if you should by the way. by creating the "moving angle" the game is able to accurately know if you should pass through the portal or not.
+---
 
-## The library we used
-The **MLX (minilibX)** is a graphical interfacing library that permit us to communicate with the window server (working on **macOS** and **linux**). This the only part we did not write ourselves, for macOS needs, one part is written in swift and objective-C, but the whole project other than window interfacing is done in C.
-This library helped us read xmp files, translating them to double array of colors format making that really easier for us to put the texture you want on the walls, and that's all for the input.
-it also helped us get the keyboard and mouse inputs.
-The output part can be resumed as creating a window with dimensions **<width, height>** and putting a pixel of color **<color>** at coordinates **<x, y>** on the window, and the game is the one that has to **where** to put **what** color.
+## 🚀 Basic Concept
 
-## We made a game engine
-Well after all a game engine is just a program that takes input and shows anything on the screen related to those inputs. You can import maps (with a strongly closed proprietary file format, right ?), launch the "engine", and walk and teleport in the environnement you just created. Isn't it the definition of a game engine ?
+This project leverages the same rendering technique as **Wolfenstein 3D** and the early **Doom** games: **ray-casting**.  
+The idea is to calculate the distance between the player and every wall in their field of view, and then create a fake 3D projection on the screen.
 
-PS : could you find the Easter eggs ?
+👉 For each vertical pixel column (**x coordinate**), the engine fires a ray from the player's position in the direction dictated by that column’s angle.  
+The ray advances until it hits a wall, and the **distance** to that wall determines how **tall** it will appear on the projection.  
+Closer walls appear taller, while distant walls seem shorter.
 
-###### Made by Basile Jeannot and Nino Faust for the common core of the 42 school
+Once the height is calculated, the engine selects the correct texture and renders it at the appropriate spot, creating the illusion of 3D depth.
+
+---
+
+## 🌀 Portal Feature / Ray Teleportation
+
+The **portal** aspect involves teleporting rays when they hit walls marked as portals (right and left click, just like in the original Portal game!).  
+A key challenge was rendering **portals that face each other**, which can reflect rays infinitely.
+
+👉 For each **ray** (each screen column), we keep track of the distance traveled every time it crosses a portal.  
+We capped the number of portal crossings at **7**, since the portal texture filter makes things too blurry beyond that.  
+Every time a ray crosses a portal, the distance it traveled is added to a global distance, then it’s **teleported** to the other portal and continues.
+
+When it comes time to render, portals are drawn in reverse order — starting with the **furthest crossed portal** — so that closer portals are always rendered in front.
+
+🔑 For player movement, we distinguish between the **viewing angle** and the **movement angle** (which depends on the keys pressed).  
+This ensures smooth portal traversal, even if the player is moving backwards or sideways relative to their view angle.  
+Without this distinction, the player wouldn’t be able to walk through a portal correctly when moving backwards!
+
+---
+
+## 📚 The Library We Used
+
+We used the **minilibX (MLX)** library for graphical interfacing, which works on **macOS** and **Linux**.  
+This is the only part of the project we didn’t write ourselves — for macOS, some parts of MLX are written in Swift and Objective-C.
+
+✅ MLX helped us:
+- Load `.xpm` files and convert them into easy-to-use texture arrays.  
+- Capture **keyboard** and **mouse inputs**.  
+- Create a window of dimensions **<width, height>** and set pixel colors at **<x, y>** coordinates.
+
+Apart from that, **the entire project** (rendering, logic, portals) is fully written in C!
+
+---
+
+## 🔧 A Homegrown Game Engine
+
+In the end, we built a **complete game engine**: a program that takes user input and dynamically renders a world to the screen.  
+You can load custom maps (in a proprietary format, of course!), launch the engine, walk around, and teleport through portals.  
+That’s the very definition of a game engine, isn’t it?
+
+---
+
+👉 **PS:** Can you find the hidden Easter Eggs?
+
+---
+
+###### ✏️ Created by **Basile Jeannot** and **Nino Faust**, for the Common Core at **42 school**.
