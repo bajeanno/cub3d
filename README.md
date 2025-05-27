@@ -1,6 +1,11 @@
+
+
 # 🎮 Cub3D
 
 **Cub3D** is a **portal game** built **entirely in C**, using the **MLX (minilibX)** library. It renders everything on the **CPU only**, and supports **multithreading**.
+
+
+[GamePlay.webm](https://github.com/user-attachments/assets/15af741f-00e3-4307-a49c-57c8afce10b1)
 
 ---
 
